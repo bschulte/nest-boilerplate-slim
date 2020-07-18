@@ -1,0 +1,12 @@
+✔ Config @done(20-07-17 19:28)
+☐ Docker
+☐ Listen on custom port
+☐ Email
+☐ JWT auth
+☐ Logging
+☐ TypeORM
+☐ User management
+    ☐ Register
+    ☐ Reset password
+    ☐ Login
+☐ README
