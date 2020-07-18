@@ -35,3 +35,4 @@ lerna-debug.log*
 
 # Sensitive values
 .env
+data.db

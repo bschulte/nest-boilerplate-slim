@@ -27,9 +27,11 @@
     "@nestjs/jwt": "^7.1.0",
     "@nestjs/passport": "^7.1.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/swagger": "^4.5.12",
     "@nestjs/typeorm": "^7.1.0",
     "@nestjsx/crud": "^4.6.2",
     "@nestjsx/crud-typeorm": "^4.6.2",
+    "class-transformer": "^0.2.3",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -37,6 +39,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
     "sqlite3": "^5.0.0",
+    "swagger-ui-express": "^4.1.4",
     "typeorm": "^0.2.25"
   },
   "devDependencies": {
