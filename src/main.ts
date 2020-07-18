@@ -9,7 +9,6 @@ async function bootstrap() {
     .setTitle('Nest Boilerplate Slim')
     .setDescription('A slim boilerplate for NestJS')
     .setVersion('1.0')
-    .addTag('nestjs-boilerplate')
     .build();
 
   const document = SwaggerModule.createDocument(app, options);

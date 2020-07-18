@@ -6,7 +6,12 @@
 ☐ Logging
 ☐ TypeORM
 ☐ User management
-    ☐ Register
+    ✔ Register @done(20-07-18 15:34)
     ☐ Reset password
-    ☐ Login
+    ✔ Login @done(20-07-18 15:34)
 ☐ README
+☐ Add context for user to be used in logging
+☐ Morgan logging for HTTP requests
+
+# Small things
+☐ Fix /auth/login request body schema in swagger
