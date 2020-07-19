@@ -36,3 +36,6 @@ lerna-debug.log*
 # Sensitive values
 .env
 data.db
+
+# Internal
+planning.todo
