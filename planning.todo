@@ -1,9 +1,9 @@
 ✔ Config @done(20-07-17 19:28)
 ✔ Listen on custom port @done(20-07-18 20:10)
 ☐ Docker
-☐ Email
+✔ Email @done(20-07-18 21:02)
 ✔ JWT auth @done(20-07-18 10:15)
-☐ Logging
+✔ Logging @done(20-07-18 21:07)
 ✔ TypeORM @done(20-07-18 20:10)
 ☐ Example production env file (with postgres)
 ☐ User management

@@ -1,10 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import * as moment from 'moment';
 
 import { UtilService } from '../../providers/UtilService';
 import { UserService } from '../user/user.service';
 import { Logger } from '../logger/logger';
 import { User } from '../user/user.entity';
+import { EmailService } from '../email/email.service';
 
 @Injectable()
 export class AuthService {
@@ -13,6 +15,7 @@ export class AuthService {
   constructor(
     private usersService: UserService,
     private jwtService: JwtService,
+    private emailService: EmailService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
@@ -36,5 +39,28 @@ export class AuthService {
     return {
       token: this.jwtService.sign(payload),
     };
+  }
+
+  async generatePasswordReset(email: string) {
+    const user = await this.usersService.findOne({ email });
+    if (!user) {
+      throw new HttpException('Error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    const passwordResetToken = UtilService.generateRandomString(48);
+    user.passwordResetTokenExpires = moment()
+      .add('4', 'hours')
+      .toDate();
+    user.passwordResetToken = passwordResetToken;
+
+    await this.usersService.save(user);
+    await this.emailService.sendEmail({
+      to: email,
+      templateName: 'passwordReset',
+      templateParams: [passwordResetToken],
+      subject: 'Password Reset',
+    });
+
+    return { msg: 'Sent password reset email' };
   }
 }

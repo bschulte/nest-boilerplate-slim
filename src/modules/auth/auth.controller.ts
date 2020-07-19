@@ -1,4 +1,4 @@
-import { Controller, UseGuards, Post, Request } from '@nestjs/common';
+import { Controller, UseGuards, Post, Request, Body } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 import { LocalAuthGuard } from './local-auth.guard';
@@ -16,7 +16,7 @@ export class AuthController {
       content: {
         'application/json': {
           examples: {
-            email: {
+            sample: {
               value: '{\n  "email": "test@test.com",\n  "password": "pass"\n}',
               summary: 'Sample login credentials',
             },
@@ -28,5 +28,23 @@ export class AuthController {
   })
   async login(@Request() req) {
     return this.authService.login(req.user);
+  }
+
+  @Post('password-reset')
+  @ApiOperation({
+    requestBody: {
+      content: {
+        'application/json': {
+          examples: {
+            sample: {
+              value: '{ "email": "test@test.com" }',
+            },
+          },
+        },
+      },
+    },
+  })
+  async createPasswordReset(@Body('email') email: string) {
+    return this.authService.generatePasswordReset(email);
   }
 }

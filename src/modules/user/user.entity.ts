@@ -16,5 +16,5 @@ export class User extends BaseEntity {
   passwordResetToken: string;
 
   @Column({ nullable: true })
-  passwordResetTokenExpires: string;
+  passwordResetTokenExpires: Date;
 }

@@ -92,7 +92,7 @@ export class EmailService {
         `${templateName} email sent, response: ${JSON.stringify(emailResult)}`,
       );
 
-      if (process.env.NODE_ENV === 'development') {
+      if (this.configService.get<string>('NODE_ENV') === 'development') {
         this.printTestEmailLink(emailResult);
       }
     } catch (err) {
