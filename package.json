@@ -33,7 +33,9 @@
     "@nestjsx/crud-typeorm": "^4.6.2",
     "@types/bcryptjs": "^2.4.2",
     "bcryptjs": "^2.4.3",
+    "chalk": "^4.1.0",
     "class-transformer": "^0.2.3",
+    "moment": "^2.27.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
@@ -42,7 +44,8 @@
     "rxjs": "^6.5.4",
     "sqlite3": "^5.0.0",
     "swagger-ui-express": "^4.1.4",
-    "typeorm": "^0.2.25"
+    "typeorm": "^0.2.25",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",

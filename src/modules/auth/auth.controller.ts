@@ -1,9 +1,8 @@
 import { Controller, UseGuards, Post, Request } from '@nestjs/common';
-import { ApiTags, ApiOperation, getSchemaPath } from '@nestjs/swagger';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 import { LocalAuthGuard } from './local-auth.guard';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dtos/login.dto';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -16,7 +15,6 @@ export class AuthController {
     requestBody: {
       content: {
         'application/json': {
-          schema: { $ref: getSchemaPath(LoginDto) },
           examples: {
             email: {
               value: '{\n  "email": "test@test.com",\n  "password": "pass"\n}',

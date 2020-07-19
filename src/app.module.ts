@@ -15,6 +15,8 @@ import { AuthModule } from './modules/auth/auth.module';
       type: 'sqlite',
       database: './data.db',
       entities: ['dist/modules/**/*.entity{.ts,.js}'],
+      synchronize: true,
+      subscribers: ['dist/modules/**/*.subscriber{.ts,.js}'],
     }),
   ],
 })

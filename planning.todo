@@ -1,10 +1,11 @@
 ✔ Config @done(20-07-17 19:28)
-☐ Listen on custom port
+✔ Listen on custom port @done(20-07-18 20:10)
 ☐ Docker
 ☐ Email
 ✔ JWT auth @done(20-07-18 10:15)
 ☐ Logging
-☐ TypeORM
+✔ TypeORM @done(20-07-18 20:10)
+☐ Example production env file (with postgres)
 ☐ User management
     ✔ Register @done(20-07-18 15:34)
     ☐ Reset password
@@ -12,6 +13,8 @@
 ☐ README
 ☐ Add context for user to be used in logging
 ☐ Morgan logging for HTTP requests
+☐ Roles
+☐ Groups
 
 # Small things
-☐ Fix /auth/login request body schema in swagger
+✔ Fix /auth/login request body schema in swagger @done(20-07-18 20:03)

@@ -11,4 +11,10 @@ export class User extends BaseEntity {
   @Column()
   @ApiProperty({ name: 'password', description: 'Password for logging in' })
   password: string;
+
+  @Column({ nullable: true })
+  passwordResetToken: string;
+
+  @Column({ nullable: true })
+  passwordResetTokenExpires: string;
 }
