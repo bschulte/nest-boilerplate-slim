@@ -6,9 +6,9 @@
 ✔ Logging @done(20-07-18 21:07)
 ✔ TypeORM @done(20-07-18 20:10)
 ☐ Example production env file (with postgres)
-☐ User management
+✔ User management @done(20-07-19 09:48)
     ✔ Register @done(20-07-18 15:34)
-    ☐ Reset password
+    ✔ Reset password @done(20-07-19 09:48)
     ✔ Login @done(20-07-18 15:34)
 ☐ README
 ☐ Add context for user to be used in logging
