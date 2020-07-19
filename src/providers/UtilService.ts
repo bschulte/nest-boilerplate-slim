@@ -3,9 +3,8 @@ import * as bcrypt from 'bcryptjs';
 export class UtilService {
   /**
    * generate hash from password or string
-   * @param {string} password
+   * @param password
    *
-   * @returns {string}
    */
   static generateHash(password: string): string {
     return bcrypt.hashSync(password, 10);
@@ -14,10 +13,9 @@ export class UtilService {
   /**
    * Takes a password as a string and validates it against the hashed password
    *
-   * @param {string} password
-   * @param {string} hash
+   * @param password
+   * @param hash
    *
-   * @returns {Promise<boolean>}
    */
   static validateHash(password: string, hash: string) {
     return bcrypt.compareSync(password, hash || '');
@@ -29,9 +27,14 @@ export class UtilService {
    * @param length
    */
   static generateRandomString(length: number): string {
-    return Math.random()
-      .toString(36)
-      .replace(/[^a-zA-Z0-9]+/g, '')
-      .substr(0, length);
+    let text = '';
+    const possible =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (let i = 0; i < length; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
   }
 }

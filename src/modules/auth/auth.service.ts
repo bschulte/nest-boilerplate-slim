@@ -11,7 +11,7 @@ import { EmailService } from '../email/email.service';
 @Injectable()
 export class AuthService {
   private logger = new Logger(AuthService.name);
-  j;
+
   constructor(
     private usersService: UserService,
     private jwtService: JwtService,
@@ -44,8 +44,13 @@ export class AuthService {
   async generatePasswordReset(email: string) {
     const user = await this.usersService.findOne({ email });
     if (!user) {
-      throw new HttpException('Error', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Could not find user',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
+
+    this.logger.debug(`Sending password reset email for user: ${email}`);
 
     const passwordResetToken = UtilService.generateRandomString(48);
     user.passwordResetTokenExpires = moment()
@@ -54,6 +59,7 @@ export class AuthService {
     user.passwordResetToken = passwordResetToken;
 
     await this.usersService.save(user);
+
     await this.emailService.sendEmail({
       to: email,
       templateName: 'passwordReset',
@@ -62,5 +68,27 @@ export class AuthService {
     });
 
     return { msg: 'Sent password reset email' };
+  }
+
+  async resetPassword(token: string, newPassword: string) {
+    const user = await this.usersService.findOne({
+      passwordResetToken: token,
+    });
+
+    if (!user) {
+      throw new HttpException('Could not find user', HttpStatus.NOT_FOUND);
+    }
+
+    if (moment().isBefore(moment(user.passwordResetTokenExpires))) {
+      this.logger.warn(`Password reset token has expired`);
+    }
+
+    user.passwordResetToken = null;
+    user.passwordResetTokenExpires = null;
+    user.password = newPassword;
+
+    await this.usersService.save(user);
+
+    return { msg: 'Successfully changed password' };
   }
 }

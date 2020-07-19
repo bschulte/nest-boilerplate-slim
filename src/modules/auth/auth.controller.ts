@@ -1,4 +1,11 @@
-import { Controller, UseGuards, Post, Request, Body } from '@nestjs/common';
+import {
+  Controller,
+  UseGuards,
+  Post,
+  Request,
+  Body,
+  Get,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 import { LocalAuthGuard } from './local-auth.guard';
@@ -30,7 +37,7 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
-  @Post('password-reset')
+  @Post('generate-password-reset')
   @ApiOperation({
     requestBody: {
       content: {
@@ -46,5 +53,23 @@ export class AuthController {
   })
   async createPasswordReset(@Body('email') email: string) {
     return this.authService.generatePasswordReset(email);
+  }
+
+  @Post('reset-password')
+  @ApiOperation({
+    requestBody: {
+      content: {
+        'application/json': {
+          example:
+            '{\n  "email": "test@test.com",\n  "password": "newPassword",\n  "token": "abcd1234"\n}',
+        },
+      },
+    },
+  })
+  async resetPassword(
+    @Body()
+    { password, token }: { password: string; token: string },
+  ) {
+    return this.authService.resetPassword(token, password);
   }
 }

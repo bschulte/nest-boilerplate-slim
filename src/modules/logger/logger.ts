@@ -50,7 +50,7 @@ export class Logger extends NestLogger {
     super.log(message);
   }
 
-  public log(message: string) {
+  public verbose(message: string) {
     this.winstonLog(message, 'verbose');
     super.log(message);
   }
