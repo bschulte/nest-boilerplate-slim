@@ -4,36 +4,39 @@ import { Logger as NestLogger } from '@nestjs/common';
 export class Logger extends NestLogger {
   private ctx: string;
 
-  public static winstonLogger = winston.createLogger({
-    level: 'silly',
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.simple(),
-    ),
-
-    transports: [
-      new winston.transports.File({
-        filename: 'logs/server.tail.log',
-        tailable: true,
-        level: 'silly',
-        maxFiles: 2,
-        maxsize: 5 * 1024 * 1024, // 5 MB
-      }),
-
-      new winston.transports.File({
-        filename: 'logs/server.log',
-        format: winston.format.combine(winston.format.uncolorize()),
-        tailable: false,
-        level: 'silly',
-        maxFiles: 30,
-        maxsize: 5 * 1024 * 1024, // 5 MB
-      }),
-    ],
-  });
+  public static winstonLogger;
 
   constructor(ctx: string) {
     super(ctx);
 
+    if (!Logger.winstonLogger) {
+      Logger.winstonLogger = winston.createLogger({
+        level: 'silly',
+        format: winston.format.combine(
+          winston.format.colorize(),
+          winston.format.simple(),
+        ),
+
+        transports: [
+          new winston.transports.File({
+            filename: 'logs/server.tail.log',
+            tailable: true,
+            level: 'silly',
+            maxFiles: 2,
+            maxsize: 5 * 1024 * 1024, // 5 MB
+          }),
+
+          new winston.transports.File({
+            filename: 'logs/server.log',
+            format: winston.format.combine(winston.format.uncolorize()),
+            tailable: false,
+            level: 'silly',
+            maxFiles: 30,
+            maxsize: 5 * 1024 * 1024, // 5 MB
+          }),
+        ],
+      });
+    }
     this.ctx = ctx;
   }
 

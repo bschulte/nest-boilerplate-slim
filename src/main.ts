@@ -1,9 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { Logger } from './modules/logger/logger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const logger = new Logger('Main');
 
   const options = new DocumentBuilder()
     .setTitle('Nest Boilerplate Slim')
@@ -15,6 +17,9 @@ async function bootstrap() {
 
   SwaggerModule.setup('docs', app, document);
 
-  await app.listen(process.env.PORT || 3333);
+  const port = process.env.PORT || 3333;
+  logger.debug(`Listening on port: ${port}`);
+
+  await app.listen(port);
 }
 bootstrap();
