@@ -81,6 +81,7 @@ export class AuthService {
 
     if (moment().isBefore(moment(user.passwordResetTokenExpires))) {
       this.logger.warn(`Password reset token has expired`);
+      throw new HttpException('Reset token expired', HttpStatus.BAD_REQUEST);
     }
 
     user.passwordResetToken = null;
