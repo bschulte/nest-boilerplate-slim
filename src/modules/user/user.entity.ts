@@ -28,5 +28,6 @@ export class User extends BaseEntity {
   role: Role;
 
   @Column('simple-array', { default: '' })
+  @IsEnum(Permission, { each: true })
   permissions: Permission[];
 }
