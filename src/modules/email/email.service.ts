@@ -33,10 +33,7 @@ export class EmailService {
   constructor(private configService: ConfigService) {}
 
   onModuleInit() {
-    this.logger.silly(`Email module initialized`);
     if (process.env.NODE_ENV === 'development') {
-      this.logger.silly('Creating test email account');
-
       mailer.createTestAccount((err, account) => {
         if (err) {
           this.logger.error(`Error creating test account: ${err}`);

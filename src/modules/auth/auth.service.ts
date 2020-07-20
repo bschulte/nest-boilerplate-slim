@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import * as moment from 'moment';
+import moment from 'moment';
 
 import { UtilService } from '../../providers/UtilService';
 import { UserService } from '../user/user.service';

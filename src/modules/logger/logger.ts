@@ -1,5 +1,10 @@
 import * as winston from 'winston';
+import * as chalk from 'chalk';
+import * as moment from 'moment';
 import { Logger as NestLogger } from '@nestjs/common';
+import { SessionService } from '../../providers/SessionService';
+import { SESSION_USER, REQUEST_ID } from '../../shared/constants';
+import { User } from '../user/user.entity';
 
 export class Logger extends NestLogger {
   private ctx: string;
@@ -9,14 +14,32 @@ export class Logger extends NestLogger {
   constructor(ctx: string) {
     super(ctx);
 
+    const customFormat = winston.format.combine(
+      winston.format.colorize(),
+      winston.format.timestamp(),
+      winston.format.prettyPrint(),
+      winston.format.printf(info => formatter(info)),
+    );
+
+    const formatter = info => {
+      const requestId = SessionService.get(REQUEST_ID) || '-';
+      const user: User = SessionService.get(SESSION_USER);
+      const email = user ? user.email : '-';
+
+      return [
+        moment(info.timestamp).format('YYYY/MM/DD - hh:mm:ss.SSS A'),
+        chalk.magentaBright(requestId),
+        email,
+        `[${info.level}]`,
+        `[${chalk.green(info.context)}]`,
+        info.message,
+      ].join(' ');
+    };
+
     if (!Logger.winstonLogger) {
       Logger.winstonLogger = winston.createLogger({
         level: 'silly',
-        format: winston.format.combine(
-          winston.format.colorize(),
-          winston.format.simple(),
-        ),
-
+        format: customFormat,
         transports: [
           new winston.transports.File({
             filename: 'logs/server.tail.log',
@@ -75,11 +98,13 @@ export class Logger extends NestLogger {
     level: 'silly' | 'verbose' | 'debug' | 'warn' | 'error',
     trace?: string,
   ) {
+    const user = SessionService.get(SESSION_USER);
     Logger.winstonLogger.log({
       level,
       message,
       trace,
       context: this.ctx,
+      user,
     });
   }
 }

@@ -7,6 +7,7 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { EmailModule } from './modules/email/email.module';
 import { Logger } from './modules/logger/logger';
+import { SessionMiddleware } from './middleware/session.middleware';
 
 @Module({
   imports: [
@@ -38,5 +39,7 @@ export class AppModule implements NestModule {
         }),
       )
       .forRoutes('*');
+
+    consumer.apply(SessionMiddleware).forRoutes('*');
   }
 }
