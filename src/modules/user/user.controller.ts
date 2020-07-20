@@ -19,7 +19,7 @@ import { User } from './user.entity';
     },
   },
   query: {
-    exclude: ['password'],
+    exclude: ['password', 'passwordResetToken', 'passwordResetTokenExpires'],
   },
 })
 @ApiTags('user')

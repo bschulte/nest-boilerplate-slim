@@ -4,7 +4,6 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import * as helmet from 'helmet';
-import * as csurf from 'csurf';
 import * as rateLimit from 'express-rate-limit';
 
 import { AppModule } from './app.module';
@@ -29,7 +28,6 @@ async function bootstrap() {
 
   // Security
   app.use(helmet());
-  app.use(csurf());
   app.enableCors();
 
   app.useGlobalPipes(new ValidationPipe());
