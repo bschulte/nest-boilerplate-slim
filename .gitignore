@@ -37,5 +37,6 @@ lerna-debug.log*
 .env
 data.db
 
-# Internal
+# Local
 planning.todo
+documentation

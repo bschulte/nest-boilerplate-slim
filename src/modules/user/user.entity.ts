@@ -17,4 +17,7 @@ export class User extends BaseEntity {
 
   @Column({ nullable: true })
   passwordResetTokenExpires: Date;
+
+  @Column({ default: false })
+  isAdmin: boolean;
 }
