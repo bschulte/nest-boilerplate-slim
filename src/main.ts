@@ -2,6 +2,7 @@ import 'source-map-support/register';
 
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 import * as helmet from 'helmet';
 import * as csurf from 'csurf';
 import * as rateLimit from 'express-rate-limit';
@@ -30,6 +31,8 @@ async function bootstrap() {
   app.use(helmet());
   app.use(csurf());
   app.enableCors();
+
+  app.useGlobalPipes(new ValidationPipe());
 
   app.use(
     rateLimit({

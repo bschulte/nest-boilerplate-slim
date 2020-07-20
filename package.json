@@ -38,6 +38,7 @@
     "@types/helmet": "0.0.47",
     "@types/morgan": "^1.9.1",
     "@types/nodemailer": "^6.4.0",
+    "@types/source-map-support": "^0.5.2",
     "bcryptjs": "^2.4.3",
     "chalk": "^4.1.0",
     "class-transformer": "^0.2.3",
