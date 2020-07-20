@@ -1,7 +1,9 @@
 import { Entity, Column } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, MinLength } from 'class-validator';
+import { IsEmail, MinLength, IsEnum } from 'class-validator';
 import { BaseEntity } from '../bases/base.entity';
+import { Role } from '../../enums/roles';
+import { Permission } from '../../enums/permissions';
 
 @Entity()
 export class User extends BaseEntity {
@@ -21,6 +23,10 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   passwordResetTokenExpires: Date;
 
-  @Column({ default: false })
-  isAdmin: boolean;
+  @Column({ default: Role.USER })
+  @IsEnum(Role)
+  role: Role;
+
+  @Column('simple-array', { default: '' })
+  permissions: Permission[];
 }

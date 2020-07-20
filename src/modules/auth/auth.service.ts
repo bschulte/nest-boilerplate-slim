@@ -1,4 +1,10 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import moment from 'moment';
 
@@ -76,12 +82,12 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new HttpException('Could not find user', HttpStatus.NOT_FOUND);
+      throw new NotFoundException('Could not find user');
     }
 
     if (moment().isBefore(moment(user.passwordResetTokenExpires))) {
       this.logger.warn(`Password reset token has expired`);
-      throw new HttpException('Reset token expired', HttpStatus.BAD_REQUEST);
+      throw new BadRequestException('Reset token expired');
     }
 
     user.passwordResetToken = null;

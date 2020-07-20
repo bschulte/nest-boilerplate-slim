@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 
 import { SessionService } from '../providers/SessionService';
 import { User } from '../modules/user/user.entity';
+import { SESSION_USER } from '../shared/constants';
 
 @Injectable()
 export class AuthUserInterceptor implements NestInterceptor {
@@ -16,7 +17,7 @@ export class AuthUserInterceptor implements NestInterceptor {
 
     const user = <User>request.user;
     if (user) {
-      SessionService.set('user', user);
+      SessionService.set(SESSION_USER, user);
     }
 
     return next.handle();

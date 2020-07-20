@@ -1,6 +1,6 @@
 import 'source-map-support/register';
 
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -50,7 +50,9 @@ async function bootstrap() {
 
   app.enable('trust proxy');
 
+  // Set global validation to happen on all request bodies
   app.useGlobalPipes(new ValidationPipe());
+  // Set global interceptor
   app.useGlobalInterceptors(new AuthUserInterceptor());
 
   app.use(
