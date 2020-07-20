@@ -24,6 +24,14 @@ export class AuthService {
     private emailService: EmailService,
   ) {}
 
+  /**
+   * Validates an email and password to ensure that the user is present in our
+   * db and that the password is correct for the user. This is used by our local
+   * strategy for user login.
+   *
+   * @param email
+   * @param password
+   */
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.usersService.findOne({ email });
 
@@ -39,6 +47,12 @@ export class AuthService {
     return null;
   }
 
+  /**
+   * Service method called by the login route. This will create
+   * the JWT to return to the user.
+   *
+   * @param user
+   */
   login(user: User) {
     const payload = { email: user.email, id: user.id };
 
@@ -47,6 +61,12 @@ export class AuthService {
     };
   }
 
+  /**
+   * Generates a password reset token for the user and sends
+   * them an email with the URL for resetting their password.
+   *
+   * @param email
+   */
   async generatePasswordReset(email: string) {
     const user = await this.usersService.findOne({ email });
     if (!user) {
@@ -76,6 +96,13 @@ export class AuthService {
     return { msg: 'Sent password reset email' };
   }
 
+  /**
+   * Resets the user's password based on the given password reset
+   * token and the new password.
+   *
+   * @param token
+   * @param newPassword
+   */
   async resetPassword(token: string, newPassword: string) {
     const user = await this.usersService.findOne({
       passwordResetToken: token,

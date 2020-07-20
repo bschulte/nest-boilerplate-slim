@@ -5,6 +5,10 @@ import { ConfigService } from '@nestjs/config';
 
 import { Logger } from '../logger/logger';
 
+/**
+ * Templates for emails to send. Each should return a template string that
+ * utilizes the parameters that are passed in to the template function.
+ */
 const emailTemplates = {
   passwordReset: (token?: string) => {
     return `
@@ -32,7 +36,13 @@ export class EmailService {
 
   constructor(private configService: ConfigService) {}
 
+  /**
+   * When the module inits, setup the email account that'll
+   * be used to send emails.
+   */
   onModuleInit() {
+    // For the development environment, utilize a dummy email account which
+    // will print out a link to view what the email will look like
     if (process.env.NODE_ENV === 'development') {
       mailer.createTestAccount((err, account) => {
         if (err) {
@@ -63,6 +73,10 @@ export class EmailService {
     }
   }
 
+  /**
+   * Main method to send an email. The templateParams will be provided to the template
+   * method for use in the template strings there.
+   */
   async sendEmail({
     subject,
     templateName,
@@ -99,6 +113,11 @@ export class EmailService {
     return true;
   }
 
+  /**
+   * Helper function to print out the link to the test email in a dev environment
+   *
+   * @param emailResult
+   */
   private printTestEmailLink(emailResult: any) {
     this.logger.debug(
       `Test email URL: ${mailer.getTestMessageUrl(emailResult)}`,

@@ -3,6 +3,7 @@ import * as bcrypt from 'bcryptjs';
 export class UtilService {
   /**
    * generate hash from password or string
+   *
    * @param password
    *
    */
