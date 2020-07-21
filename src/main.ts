@@ -22,6 +22,7 @@ CrudConfigService.load({
   },
 });
 
+import { ConfigService } from '@nestjs/config';
 import { Logger } from './modules/logger/logger';
 import { AuthUserInterceptor } from './interceptors/auth-user.interceptor';
 
@@ -31,15 +32,18 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const logger = new Logger('Main');
 
-  const options = new DocumentBuilder()
-    .setTitle('Nest Boilerplate Slim')
-    .setDescription('A slim boilerplate for NestJS')
-    .setVersion('1.0')
-    .build();
+  const configService = app.select(AppModule).get(ConfigService);
+  if (configService.get<string>('NODE_ENV') === 'development') {
+    const options = new DocumentBuilder()
+      .setTitle('Nest Boilerplate Slim')
+      .setDescription('A slim boilerplate for NestJS')
+      .setVersion('1.0')
+      .build();
 
-  const document = SwaggerModule.createDocument(app, options);
+    const document = SwaggerModule.createDocument(app, options);
 
-  SwaggerModule.setup('docs', app, document);
+    SwaggerModule.setup('docs', app, document);
+  }
 
   const port = process.env.PORT || 3333;
   logger.debug(`Listening on port: ${port}`);
