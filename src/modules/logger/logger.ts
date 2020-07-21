@@ -9,7 +9,7 @@ import { User } from '../user/user.entity';
 export class Logger extends NestLogger {
   private ctx: string;
 
-  public static winstonLogger;
+  public static winstonLogger: winston.Logger;
 
   constructor(ctx: string) {
     super(ctx);
@@ -37,27 +37,45 @@ export class Logger extends NestLogger {
     };
 
     if (!Logger.winstonLogger) {
+      const transports = [
+        new winston.transports.File({
+          filename: 'logs/server.tail.log',
+          tailable: true,
+          level: 'silly',
+          maxFiles: 2,
+          maxsize: 5 * 1024 * 1024, // 5 MB
+        }),
+
+        new winston.transports.File({
+          filename: 'logs/server.log',
+          format: winston.format.combine(winston.format.uncolorize()),
+          tailable: false,
+          level: 'silly',
+          maxFiles: 30,
+          maxsize: 5 * 1024 * 1024, // 5 MB
+        }),
+      ];
+
+      if (process.env.NODE_ENV === 'production') {
+        transports.push(
+          new winston.transports.File({
+            filename: 'logs/server.logstash.log',
+            tailable: false,
+            format: winston.format.combine(
+              winston.format.uncolorize(),
+              winston.format.json(),
+            ),
+            level: 'silly',
+            maxFiles: 10,
+            maxsize: 5 * 1024 * 1024, // 5 MB
+          }),
+        );
+      }
+
       Logger.winstonLogger = winston.createLogger({
         level: 'silly',
         format: customFormat,
-        transports: [
-          new winston.transports.File({
-            filename: 'logs/server.tail.log',
-            tailable: true,
-            level: 'silly',
-            maxFiles: 2,
-            maxsize: 5 * 1024 * 1024, // 5 MB
-          }),
-
-          new winston.transports.File({
-            filename: 'logs/server.log',
-            format: winston.format.combine(winston.format.uncolorize()),
-            tailable: false,
-            level: 'silly',
-            maxFiles: 30,
-            maxsize: 5 * 1024 * 1024, // 5 MB
-          }),
-        ],
+        transports,
       });
     }
     this.ctx = ctx;
