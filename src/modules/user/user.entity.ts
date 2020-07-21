@@ -1,6 +1,6 @@
 import { Entity, Column } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, MinLength, IsEnum } from 'class-validator';
+import { IsEmail, MinLength, IsEnum, IsOptional } from 'class-validator';
 import { BaseEntity } from '../bases/base.entity';
 import { Role } from '../../enums/roles';
 import { Permission } from '../../enums/permissions';
@@ -25,9 +25,11 @@ export class User extends BaseEntity {
 
   @Column({ default: Role.USER })
   @IsEnum(Role)
+  @IsOptional()
   role: Role;
 
   @Column('simple-array', { default: '' })
   @IsEnum(Permission, { each: true })
+  @IsOptional()
   permissions: Permission[];
 }
