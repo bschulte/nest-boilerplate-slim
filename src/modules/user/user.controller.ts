@@ -34,7 +34,11 @@ import { User } from './user.entity';
   },
 })
 @CrudAuth({
-  filter: (user: User) => ({ id: user.id }),
+  filter: (user: User) => {
+    if (user) {
+      return { id: user.id };
+    }
+  },
 })
 @ApiTags('user')
 @Controller('user')
