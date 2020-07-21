@@ -188,3 +188,24 @@ routes: {
 ### Auto-generating code documentation
 
 https://docs.nestjs.com/recipes/documentation
+
+### Docker
+
+We've got a docker-compose setup that runs the app itself, the database and a simple web-based database admin interface. You can start the whole Docker infrastructure with:
+
+- `docker-compose build`
+- `docker-compose up`
+
+This will be mainly used in a production environment and you won't be developing with this setup. One nice thing about having Docker setup is that we can use it for our database so you don't have to worry about setting up and configuring it on your host machine.
+
+`docker-compose run -p 5455:5432 postgres` will start up just the database part of our Docker configuration. You can then have your `.env` file look like:
+
+```
+DB_HOST=localhost
+DB_PORT=5455
+DB_USERNAME=postgres
+DB_PASSWORD=postgres
+DB_DATABASE=postgres
+```
+
+to connect to the Docker database instance.

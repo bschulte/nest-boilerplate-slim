@@ -1,4 +1,4 @@
-import 'source-map-support/register';
+require('source-map-support').install();
 
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -36,7 +36,7 @@ async function bootstrap() {
   if (configService.get<string>('NODE_ENV') === 'development') {
     const options = new DocumentBuilder()
       .setTitle('Nest Boilerplate Slim')
-      .setDescription('A slim boilerplate for NestJS')
+      .setDescription('A slim boilerplate for Nest')
       .setVersion('1.0')
       .build();
 

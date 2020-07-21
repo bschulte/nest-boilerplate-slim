@@ -64,6 +64,7 @@
     "rxjs": "^6.5.4",
     "sqlite3": "^5.0.0",
     "swagger-ui-express": "^4.1.4",
+    "source-map-support": "^0.5.19",
     "typeorm": "^0.2.25",
     "uniqid": "^5.2.0",
     "winston": "^3.3.3"
@@ -86,7 +87,6 @@
     "eslint-plugin-import": "^2.22.0",
     "jest": "26.0.1",
     "prettier": "^1.19.1",
-    "source-map-support": "^0.5.19",
     "supertest": "^4.0.2",
     "ts-jest": "26.1.0",
     "ts-loader": "^6.2.1",
