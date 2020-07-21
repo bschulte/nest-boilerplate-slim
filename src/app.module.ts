@@ -16,13 +16,7 @@ import { SessionMiddleware } from './middleware/session.middleware';
     }),
     UserModule,
     AuthModule,
-    TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: './data.db',
-      entities: ['dist/modules/**/*.entity{.ts,.js}'],
-      synchronize: true,
-      subscribers: ['dist/modules/**/*.subscriber{.ts,.js}'],
-    }),
+    TypeOrmModule.forRoot(),
     EmailModule,
   ],
 })

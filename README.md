@@ -21,6 +21,15 @@ $ npm run dev
 
 # production mode
 $ npm run start:prod
+
+# Serve compodoc code documentation
+$ npm run docs
+
+# Generate a migration automatically from typeorm
+$ npm run migration:generate -- <name_of_migration>
+
+# Create a migration to be manually filled out
+$ npm run migration:create -- <name_of_migration>
 ```
 
 ## Test
