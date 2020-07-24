@@ -1,4 +1,4 @@
-import { Controller, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards, Get } from '@nestjs/common';
 import { Crud, CrudAuth } from '@nestjsx/crud';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
@@ -6,6 +6,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { Permissions } from '../../decorators/permissions.decorator';
 import { Permission } from '../../enums/permissions';
 import { PermissionsGuard } from '../../guards/permissions.guard';
+import { AuthenticatedUser } from '../../decorators/authenticatedUser.decorator';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 
@@ -44,4 +45,10 @@ import { User } from './user.entity';
 @Controller('user')
 export class UserController {
   constructor(public service: UserService) {}
+
+  @Get('/me')
+  @UseGuards(JwtAuthGuard)
+  async me(@AuthenticatedUser() user: User) {
+    return user;
+  }
 }

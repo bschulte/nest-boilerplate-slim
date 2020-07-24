@@ -42,7 +42,7 @@ export class AuthService {
       return result;
     }
     this.logger.warn(
-      `Either user does not exist or password was incorrect for user: ${user.email}`,
+      `Either user does not exist or password was incorrect for user: ${email}`,
     );
     return null;
   }
