@@ -32,7 +32,7 @@ export class AuthService {
    * @param email
    * @param password
    */
-  async validateUser(email: string, password: string): Promise<any> {
+  async validateUser(email: string, password: string): Promise<Partial<User>> {
     const user = await this.usersService.findOne({ email });
 
     if (user && UtilService.validateHash(password, user.password)) {
